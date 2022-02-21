@@ -1,0 +1,17 @@
+{
+  "name": "spotifyaccesstoken",
+  "version": "1.0.0",
+  "description": "An api to get the Spotify API access token for everythings-connected.com",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "spotify-web-api-node": "^5.0.2"
+  }
+}
