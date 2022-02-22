@@ -1,3 +1,8 @@
+/*  Created by Donovan West
+    In service of everythings-connected.com
+    February 2022
+*/
+
 const SpotifyWebAPI = require('spotify-web-api-node');
 const express = require('express');
 const cors = require('cors');
@@ -12,14 +17,16 @@ let clientSecret = process.env.CLIENT_SECRET;
 
 app.get('/accessToken', (req, res) => {
     totalRequests++;
-    console.log("DWEST: access token request received. Number " + totalRequests);
+;
     const host = req.get('host');
-    const origin = req.get('origin');
-    const validDomains = ["everythings-connected.com", "www.everythings-connected.com", "donovanwest.github.io", "127.0.0.1"];
+    const origin = req.get('origin'); 
+    console.log("DWEST: access token request received from host " + host + " and origin " + origin + ". Number " + totalRequests)
+    let validDomains = ["everythings-connected.com", "www.everythings-connected.com", "donovanwest.github.io"];
+    //validDomains.push("127.0.0.1");
     let valid = false;
-    if(host && host.search("localhost") != -1 || host.search("127.0.0.1") != -1){
-        valid = true;
-    }
+    // if(host && host.search("localhost") != -1 || host.search("127.0.0.1") != -1){
+    //     valid = true;
+    // }
     validDomains.forEach(domain => {
         if(!valid && origin && origin.search(domain) != -1){
             valid = true;
@@ -46,7 +53,6 @@ app.get('/accessToken', (req, res) => {
 
 const ports = [3000, 8081];
 if(process.env.PORT) ports.push(process.env.PORT);
-console.log("DWEST: all ports: " + ports);
 ports.forEach(port => {
     app.listen(port, () => {
         console.log(`DWEST: Listening on port ${port}`)
