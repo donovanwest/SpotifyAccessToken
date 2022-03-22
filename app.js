@@ -17,7 +17,6 @@ let clientSecret = process.env.CLIENT_SECRET;
 
 app.get('/accessToken', (req, res) => {
     totalRequests++;
-;
     const host = req.get('host');
     const origin = req.get('origin'); 
     console.log("DWEST: access token request received from host " + host + " and origin " + origin + ". Number " + totalRequests)
@@ -35,7 +34,7 @@ app.get('/accessToken', (req, res) => {
 
     if(!valid){
         console.log("Invalid origin: " + origin + ". Host: " + host);
-        res.send("Invalid origin. Nice try");
+        res.status(400).send("Invalid origin. Nice try");
         return;
     }
 
@@ -45,7 +44,10 @@ app.get('/accessToken', (req, res) => {
     });
 
     spotifyAPI.clientCredentialsGrant().then((data, err) => {
-        if (err) console.log(err);
+        if (err) {
+            console.log(err)
+            res.status(401).send("Something went wrong getting access token from spotify");
+        };
         const accessToken = data.body['access_token'];
         res.send(accessToken);
     });
